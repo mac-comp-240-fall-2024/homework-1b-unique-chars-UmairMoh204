@@ -77,6 +77,28 @@ bool hasUniqueChars(char * inputStr) {
   // It also illustrates how to use the seeBits function for debugging.
   // Printed values should initially be all zeros
   // TODO: remove or comment out this code when satisfied of function correctness
+
+  for (int i = 0; i < str_len(inputStr); i++) {
+    nextChar = inputStr[i];
+    unsigned long index = nextChar-65;
+    unsigned long mask = 1l << index;
+    /// This is saying that if there is a space to continue
+    if (nextChar == "32") {
+      continue;
+    }
+    /// This is checking to see if it is a letter or non-letter
+    else if ((nextChar >= 65) && nextChar <=126) {
+      /// if check_A = 0100 and mask = 0100 then it's true because it get's you a 1
+      if (mask & checkBitsA_z) {
+        return false;
+      }
+      /// now you'll return either one
+      else {
+        return checkBitsA_z || mask;
+      }
+    }
+  }
+
   
   char debug_str_A_z[128];
   strcpy(debug_str_A_z, "checkBitsA_z before: \n");
