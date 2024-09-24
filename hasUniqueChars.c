@@ -1,7 +1,10 @@
 /*
  * hasUniqueChars.c
  * 
- * TODO: replace this line with lines containing a description
+ * Umair Mohammed
+ * 
+ * bool hasUniqueChars(char * inputStr) is a method that checks to see if an input string has an duplicate of letters, numbers, or symbols. If there is a duplicate the method would return a
+ * 0 indicating that there is an duplicate and 1 indicating that there are no duplicates. 
  * 
  * Author: 
  */
@@ -67,7 +70,7 @@ bool hasUniqueChars(char * inputStr) {
   // unsigned long can handle 64 different chars in a string
   // if a bit at a position is 1, then we have seen that character
   unsigned long checkBitsA_z = 0;   // for checking A through z and {|}~
-  unsigned long checkBitsexcl_amp =0;  // for checking ! though @ 
+  unsigned long checkBitsexcl_amp = 0;  // for checking ! though @ 
 
   char nextChar;         // next character in string to check
 
@@ -78,27 +81,54 @@ bool hasUniqueChars(char * inputStr) {
   // Printed values should initially be all zeros
   // TODO: remove or comment out this code when satisfied of function correctness
 
-  for (int i = 0; i < str_len(inputStr); i++) {
+  for (int i = 0; i < strlen(inputStr); i++) {
     nextChar = inputStr[i];
     unsigned long index = nextChar-65;
     unsigned long mask = 1l << index;
     /// This is saying that if there is a space to continue
-    if (nextChar == "32") {
+    if (nextChar == 32) {
       continue;
     }
-    /// This is checking to see if it is a letter or non-letter
-    else if ((nextChar >= 65) && nextChar <=126) {
-      /// if check_A = 0100 and mask = 0100 then it's true because it get's you a 1
+    /// This is checking if nextChar is between A-Z and if so then to get an index and mask to determine whether the nextChar is repeated in the input string
+    else if ((nextChar >= 65) && nextChar <=90) {
+      unsigned long index = nextChar - 65;
+      unsigned long mask = 1l << index;
+      /// Checking to see if there is a match
       if (mask & checkBitsA_z) {
         return false;
       }
-      /// now you'll return either one
+      /// Tracks to see if it has been seen and if not to save it as seen return false if there is a duplicate
       else {
-        return checkBitsA_z || mask;
+        checkBitsA_z |= mask;
+      }
+    }
+    /// This is checking if nextChar is between a-z and if so to get an index and mask to determine whether the nextChar is repeated in the input string
+    else if ((nextChar >= 97) && nextChar <=122) {
+      unsigned long index = nextChar - 97 + 26;
+      unsigned long mask = 1l << index;
+      /// Tracks to see if it has been seen and if not to save it as seen return false if there is a duplicate
+      if (mask & checkBitsA_z) {
+        return false;
+      }
+      else {
+        checkBitsA_z |= mask;
+      }
+    }
+    /// This is checking if nextChar is a special character and if so to get an index and mast to determine if there is a repeated special charcter
+    else if (nextChar >= 33 && nextChar <= 64) {
+      unsigned long index = nextChar - 33;
+      unsigned long mask = 1l << index;
+      /// Tracks to see if it has been seen and if not to save it as seen return false if there is a duplicate
+      if (checkBitsexcl_amp & mask) {
+          return false;
+      }
+
+      else {
+        checkBitsexcl_amp |= mask;
       }
     }
   }
-
+  return true;
   
   char debug_str_A_z[128];
   strcpy(debug_str_A_z, "checkBitsA_z before: \n");
@@ -111,27 +141,13 @@ bool hasUniqueChars(char * inputStr) {
 
   // TODO: Declare additional variables you need here
 
-  
-  for(i = 0; i < strlen(inputStr); i++) {
-    nextChar = inputStr[i];
-    // TODO: Add your code here to check nextChar, see if it is a duplicate, and update the checkBits variables
 
-    // -------------------------------------------------------------
-    // Below this are examples of debugging print statements you could use
-    // Move/use as makes sense for you!
-    // Modify to work on checkBitsexcl_amp
-    // TODO: Comment out or remove when your function works correctly
-    printf("nextchar int value: %d\n", nextChar);
-    char char_str[2] = "\0";
-    char_str[0] = nextChar;
-    strcpy(debug_str_A_z, "nextchar: ");
-    strcat(debug_str_A_z, char_str);
-    strcat(debug_str_A_z,", checkBitsA_z: \n");
-    seeBits(checkBitsA_z, debug_str_A_z);
+  printf("nextchar int value: %d\n", nextChar);
+  char char_str[2] = "\0";
+  char_str[0] = nextChar;
+  strcpy(debug_str_A_z, "nextchar: ");
+  strcat(debug_str_A_z, char_str);
+  strcat(debug_str_A_z,", checkBitsA_z: \n");
+  seeBits(checkBitsA_z, debug_str_A_z);
     // ------------------------------------------------------------- 
-  }
-
-  // if through all the characters, then no duplicates found
-  return true;
-  
 }
