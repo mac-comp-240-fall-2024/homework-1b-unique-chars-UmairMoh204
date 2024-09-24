@@ -1,5 +1,7 @@
 /*
- * TODO: Add an appropriate descriptive comment here
+ * Umair Mohammed
+ * test.c file tests to see if the function hasUniqueChars works as intended. The file would run tests on lower case, upper case, and special character in different combinations.
+ * I will be adding an addition four more tests totally to six total text cases.
  */
 
 #include <stdio.h>    // printf
@@ -37,21 +39,36 @@ int main() {
   // -------------------------------------------------------------
   // Thorough and exhaustive tests of hasUniqueChars()  
   bool ok;    // holds the result of hasUniqueChars(); used in asserts
-  
-  // Test 1: a test case that should return false because characters are duplicated
+
+  // Test 1 (Given) - This should have duplicate
   strcpy(string3, "This should fail (l and s and i and h)");
   ok = hasUniqueChars(string3);
-  assert(!(ok));
-  
-  // Test 2: This should be true and not fail, but won't work until you
-  // complete the hasUniqueChars() function
+  assert(!(ok));  
+  // Test 2 (Given) - This should should not have duplicates
   strcpy(string3, "abcdefghij");
   ok = hasUniqueChars(string3);
   assert(ok);
+  // Test 3 (Given) - This should should have duplicates with the & and it does identify it
+  strcpy(string3, "^*$^&*&");
+  ok = hasUniqueChars(string3);
+  assert(!(ok));
+  // Test 3 (Given) - This should should have duplicates with the 2, 3, 5, 4 testing with multiple duplicates and it does identify it as 0 meaning it has duplicates
+  strcpy(string3, "543212345");
+  ok = hasUniqueChars(string3);
+  assert(!(ok));
+  // Test 3 (Given) - This should should not have duplicates. Tested with upper case and lower case r and it said no duplicate.
+  strcpy(string3, "UmairRocks");
+  ok = hasUniqueChars(string3);
+  assert(ok);
+  // Test 3 (Given) - This should should not have duplicates. Tested with with mix of duplicate special case and character. It identified the duplicate.
+  strcpy(string3, "LH978gyb(*t7&gi*Igt68)");
+  ok = hasUniqueChars(string3);
+  assert(!(ok));
   
-  // TODO: add your tests here
-
-
+  // strcpy(string3, "abcdefghij");
+  // ok = hasUniqueChars(string3);
+  // printf("ok : %d\n", ok);
+  // assert(ok);
 
   // NOTE: if you add a \n to any tests, this should cause the
   //       exit failure given. Keep this test last so you can check 
